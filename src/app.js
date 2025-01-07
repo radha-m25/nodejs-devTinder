@@ -1,26 +1,21 @@
 const express = require("express");
+const { adminAuth, userAuth } = require("./adminAuth");
+
 
 
 const app = express();
 
-app.get("/admin",(req,res) => {
+// whatever route is start with "/admin" first it will check the admin middleware
+app.use("/admin",adminAuth);
+
+app.get("/admin/data",(req,res) => {
     res.send("Welcome Admin");
 })
 
-app.get("/dashboard", (req, res,next) => {
-  console.log("dashboard-1");
-  // res.send("Welcome to dashboard dashboard-1");
-  next();
-},
-(req,res,next) => {
-    console.log("dashboard-2");
-    // res.send("Welcome to dashboard dashboard-2");
-    next();
-},
-(req,res) => {
-    console.log("dashboard-3");
-    res.send("Welcome to dashboard dashboard-3");
-});
+// only for this route userAuth will check
+app.get("/user/data",userAuth,(req,res) => {
+    res.send("Welcome User");
+})
 
 app.listen(7777, () => {
   console.log("Server is running on port 7777");
