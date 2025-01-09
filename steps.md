@@ -34,3 +34,11 @@ npm install -g nodemon
 - Write a dummy auth middleware for admin
 - write a dummy auth middleware for all except /user.login
 - error handling using a app.use("/) - (err,req,res,next)
+
+- Create a free cluster on mongodb official website (Mongo Atlas)
+- Install mongoose library - https://mongoosejs.com/docs/guide.html
+- Connect ur application to the database "Connection-url"/devTiner
+- Call the connectDB function to database before starting application on 7777
+- create userSchema & user model
+- Create POST /signup API to add data to database
+- Push some documents using API calls from postman
