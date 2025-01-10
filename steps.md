@@ -1,16 +1,16 @@
-1. Initialize repo folder
-2. npm init (create pakage.json)
-3. create src, src/app.js
-4. node src/app.js (with console.log(""))
-5. npm install express
-6. create express server
-7. listen to the port (7777)
-8. create request handler
-9. If any update will do in server, it won't be reflected in client side need to close and re-run
-10. npm install nodemon (will update server automatically) - (https://www.npmjs.com/package/nodemon)
-npm install -g nodemon
-11. update command in package.json (under script)
-12. diff b/w caret and tilde (^ vs ~)
+- Initialize repo folder
+- npm init (create pakage.json)
+- create src, src/app.js
+- node src/app.js (with console.log(""))
+- npm install express
+- create express server
+- listen to the port (7777)
+- create request handler
+- If any update will do in server, it won't be reflected in client side need to close and re-run
+- npm install nodemon (will update server automatically) - (https://www.npmjs.com/package/nodemon)
+- npm install -g nodemon
+- update command in package.json (under script)
+- diff b/w caret and tilde (^ vs ~)
 
 - intialize git 
 - gitignore
@@ -42,3 +42,17 @@ npm install -g nodemon
 - create userSchema & user model
 - Create POST /signup API to add data to database
 - Push some documents using API calls from postman
+- Error handling using try and catch
+
+- JS object vs JSON (diff)
+- add the express.json middleware to ur app
+- Make your signup API dynamic to receive data from end user
+- Make GET call /feed to get all the user
+- Make API call to get only one user having same email
+- To get single user by email (use - find,use-findbyone)
+- Create a delete user API
+- Diff b/w PATCH and PUT
+- API - update a user
+- Update a mongoose model
+- What are options in a Model.findOneAndUpdate method,explore more about it.
+- API - Update the user with email ID
