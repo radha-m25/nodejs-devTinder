@@ -25,6 +25,47 @@ app.post("/signup", async (req, res) => {
     }
   });
 
+  app.get("/feed",async (req,res) => {
+    try {
+        const users = await User.find({});
+        res.send(users);
+    } catch (err) {
+        res.status(400).send("users not found");
+    }
+  })
+
+  app.get("/user",async (req,res) => {
+    const userFirstName = req.body.firstName;
+    try {
+        const user = await User.findOne({firstName: userFirstName});
+        res.send(user);
+    } catch (err) {
+        res.status(400).send("users not found");
+    }
+  })
+
+  app.delete("/deleteUser",async (req,res) => {
+    const userFirstName = req.body.firstName;
+    try {
+        const user = await User.deleteOne({firstName: userFirstName});
+        res.send(user);
+    } catch (err) {
+        res.status(400).send("users not deleted");
+    }
+  })
+
+  app.patch("/updateUser",async (req,res) => {
+    const userId = req.body._id;
+    const userData = req.body;
+    
+    try {
+        await User.findByIdAndUpdate({_id: userId},userData);
+        res.send("user updated Successfully!!");
+    }catch(err) {
+        res.status(400).send("users not updated");
+    }
+})
+
 
 connectDB()
   .then(() => {
