@@ -2,26 +2,37 @@ const express = require("express");
 const connectDB = require("./config/database");
 const User = require("./models/user");
 const app = express();
+const bcrypt = require("bcrypt");
 
 app.use(express.json());
 
 app.post("/signup", async (req, res) => {
-    const userDetails = req.body;
+  // validate data
+  const { firstName,lastName,email,password } = req.body;
+
+  // encrypt password
+  const passwordHash = await bcrypt.hash(password, 10);
+
+    console.log(passwordHash);
+
+  // create userDetails instance
+    const userDetails = ({
+      firstName,
+      lastName,
+      email,
+      password: passwordHash
+    })
     console.log("user>>>",userDetails);
-    // const userObj = {
-    //   firstName: "Roobi",
-    //   lastName: "Muthu",
-    //   address: "Ariyalur",
-    // };
   
     try {
-      //creating the new instance of a user model
-      //const user = new User(userObj);
+      if(userDetails?.skills?.length > 10) {
+        return res.status(400).send("max legnth exceed");
+      }
     const user = new User(userDetails);
       user.save();
       res.send("User Created");
-    } catch {
-      res.send("Error Occured while creating user");
+    } catch(e) {
+      res.send("Error Occured while creating user" + e.message);
     }
   });
 
@@ -59,10 +70,18 @@ app.post("/signup", async (req, res) => {
     const userData = req.body;
     
     try {
-        await User.findByIdAndUpdate({_id: userId},userData);
+        const allowed_update = ["_id","firstName","lastName","address","photoUrl","about","skills"];
+        const isAllowedData = Object.keys(userData).every((k) => allowed_update.includes(k));
+
+        if(!isAllowedData) {
+          res.status(400).send("update not allowed");
+        }
+        await User.findByIdAndUpdate({_id: userId},userData,{
+          runValidators: true,
+        });
         res.send("user updated Successfully!!");
     }catch(err) {
-        res.status(400).send("users not updated");
+        res.status(400).send("users not updated" + " " + err.message);
     }
 })
 

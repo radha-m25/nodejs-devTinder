@@ -56,3 +56,25 @@
 - Update a mongoose model
 - What are options in a Model.findOneAndUpdate method,explore more about it.
 - API - Update the user with email ID
+
+epi-8
+- Explore schemaType from the doc
+- add required,unique,lowercase,min,minLength,trim - https://mongoosejs.com/docs/schematypes.html
+- Add default
+- Create a custom validate function for gender
+- Improve the DB schema - PUT all approprite validations on each field in schema.
+- add timestamp to the schema.
+[
+- add options for needed fields - required,unique,lowercase,remaining options... (https://mongoosejs.com/docs/search.html?q=validators,https://mongoosejs.com/docs/api/model.html#Model.findByIdAndUpdate())
+- add email,gender,needed fields
+  [ to resolve issue - when we create new user then only it will allow to validate data only for paeticular method - where we gave the conditions like get method.]
+- add runvalidator option,add custom validator,type : array of string]
+- Add API level validation on Patch request & signup post API (allowed fields & skills length limit)
+- DATA sanitization - add API validation foe each field.
+- install validator (npm i validator - https://www.npmjs.com/package/validator)
+- Explore validator library function and use validator func for password,email,photoUrl
+
+EPI-09
+- Validat data on signup API
+- Install bcrypt package - npm i bcrypt
+- Create PasswordHash using bcrypt.hask & save the user is encrypted password - https://www.npmjs.com/package/bcrypt
