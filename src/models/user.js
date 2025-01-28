@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
 
 const userSchema = new mongoose.Schema({
     firstName: {
@@ -59,6 +61,23 @@ const userSchema = new mongoose.Schema({
         type: [String],
     }
 }, {timestamps: true});
+
+
+// Always try to create reusable methods
+userSchema.methods.getJWT = async function() {
+    // this will refer instance of particular user. So always create normal function.
+    const user = this;
+    const token = await jwt.sign({ userId: user._id }, "DevTinder@2501",{expiresIn : "7d"});
+    return token;
+}
+
+userSchema.methods.validatePassword = async function(passwordInputByUser) {
+    const user = this;
+    const passwordHash = user.password;
+    const isMatchPassword = await bcrypt.compare(passwordInputByUser, passwordHash);
+
+    return isMatchPassword;
+}
 
 // mongoose.model(User,"userSchema");
 

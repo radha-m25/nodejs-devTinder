@@ -4,7 +4,6 @@ const User = require("./models/user");
 const app = express();
 const bcrypt = require("bcrypt");
 const cookieParser = require("cookie-parser");
-const jwt = require("jsonwebtoken");
 const {userAuth} = require("./middlewares/auth");
 
 // to read json data
@@ -52,7 +51,7 @@ app.post("/login", async (req, res) => {
       return res.status(400).send("Invalid email or password");
     }
 
-    const isMatchPassword = await bcrypt.compare(password, user.password);
+    const isMatchPassword = await user.validatePassword(password);
 
     if (!isMatchPassword) {
       return res.status(400).send("Invalid email or password");
@@ -61,12 +60,11 @@ app.post("/login", async (req, res) => {
       // res.cookie("userId", "werqwertyui");
 
       // JWT token creation
-      const token = jwt.sign({ userId: user._id }, "DevTinder@2501",{expiresIn : "7d"});
+      // const token = await jwt.sign({ userId: user._id }, "DevTinder@2501",{expiresIn : "7d"});
+      const token = await user.getJWT();
 
       // send the generated token to the cookies
       res.cookie("AuthToken", token, { expires: new Date(Date.now() + 3600000), httpOnly: true });
-
-      console.log("Generated JWT: " + token);
 
       res.send("Login Success");
     }
