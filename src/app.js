@@ -5,6 +5,7 @@ const app = express();
 const bcrypt = require("bcrypt");
 const cookieParser = require("cookie-parser");
 const jwt = require("jsonwebtoken");
+const {userAuth} = require("./middlewares/auth");
 
 // to read json data
 app.use(express.json());
@@ -58,12 +59,12 @@ app.post("/login", async (req, res) => {
     } else {
       // // set the dummy cookies
       // res.cookie("userId", "werqwertyui");
-      
+
       // JWT token creation
-      const token = jwt.sign({userId: user._id},'DevTinder@2501');
+      const token = jwt.sign({ userId: user._id }, "DevTinder@2501");
 
       // send the generated token to the cookies
-      res.cookie("AuthToken",token);
+      res.cookie("AuthToken", token);
 
       console.log("Generated JWT: " + token);
 
@@ -75,7 +76,6 @@ app.post("/login", async (req, res) => {
 });
 
 app.get("/feed", async (req, res) => {
-
   try {
     const users = await User.find({});
     res.send(users);
@@ -84,26 +84,17 @@ app.get("/feed", async (req, res) => {
   }
 });
 
-app.get("/profile",async (req,res) => { 
-  
-  const token = req.cookies.AuthToken;
-  console.log("token: " + token);
-  if (!token) {
-    return res.status(401).send("token is Invalid");
+app.get("/profile",userAuth, async (req, res) => {
+  try {
+    const user = req.user;
+    res.send(user);
+  } catch (err) {
+    return res.status(400).send("ERROR: " + err.message);
   }
+});
 
-  const decodedToken = jwt.verify(token,'DevTinder@2501');
-  const {userId} = decodedToken;
-  console.log("_id: " + userId);
-  
-  const user = await User.findById(userId);
-  
-   if(!user) {
-    return res.status(404).send("User not found");
-   }
-
-   res.send("Logged user details: " + user);
-  
+app.get("/sendConnectionRequest",userAuth, async (req,res) => {
+  res.send("send connecion request");
 })
 
 app.get("/user", async (req, res) => {
