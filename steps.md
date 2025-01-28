@@ -87,7 +87,7 @@ EPI-10
 - just send a dummy cookie to user
 - create GET /profile API and check if you get the cookies back.
 - install jsonnwebtoken (jsw) - [npm jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken)
-- in login API , after email and password validation, create a JSW token and send it to user in cookies. - expressjs.com
+- in login API , after email and password validation, create a JSW token and send it to user in cookies. - expressjs.com [https://expressjs.com/en/5x/api.html#res.cookie]
 - read the cookies inside your profile API and find the logged in user
 
 - userAuth middleware

@@ -61,10 +61,10 @@ app.post("/login", async (req, res) => {
       // res.cookie("userId", "werqwertyui");
 
       // JWT token creation
-      const token = jwt.sign({ userId: user._id }, "DevTinder@2501");
+      const token = jwt.sign({ userId: user._id }, "DevTinder@2501",{expiresIn : "7d"});
 
       // send the generated token to the cookies
-      res.cookie("AuthToken", token);
+      res.cookie("AuthToken", token, { expires: new Date(Date.now() + 3600000), httpOnly: true });
 
       console.log("Generated JWT: " + token);
 
