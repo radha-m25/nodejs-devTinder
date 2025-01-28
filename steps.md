@@ -78,3 +78,22 @@ EPI-09
 - Validat data on signup API
 - Install bcrypt package - npm i bcrypt
 - Create PasswordHash using bcrypt.hask & save the user is encrypted password - https://www.npmjs.com/package/bcrypt
+
+- create login API - POST /login
+- validate data and throw new error If email or password is invalid.
+
+EPI-10
+- install cookie-parser - https://expressjs.com/en/resources/middleware/cookie-parser.html
+- just send a dummy cookie to user
+- create GET /profile API and check if you get the cookies back.
+- install jsonnwebtoken (jsw) - [npm jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken)
+- in login API , after email and password validation, create a JSW token and send it to user in cookies. - expressjs.com
+- read the cookies inside your profile API and find the logged in user
+
+- userAuth middleware
+- add the userAuth middleware in profile API and new sendConnectionRequest API
+- set the expiry of JWT token and cookies to 7 days.
+
+- create userSchema method to getJWT()
+- Create UserSchema method to comaprepassword(passwordInputByUser)
+
