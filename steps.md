@@ -97,3 +97,12 @@ EPI-10
 - create userSchema method to getJWT()
 - Create UserSchema method to comaprepassword(passwordInputByUser)
 
+EPI-11
+- Explore tinder APIs
+- Create a list of all API you can think of in Dev tinder
+- under mutiple routes under respective routers
+- Read documentation for express.Router
+- Create routes folder for managing auth,profile and request routers
+- Create authRouter,profileRouter , requestRouter
+- Import these routers in app.js
+
