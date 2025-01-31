@@ -106,3 +106,35 @@ EPI-11
 - Create authRouter,profileRouter , requestRouter
 - Import these routers in app.js
 
+- Create POST /logout API
+- create PATCH /profile/edit
+- Create PATCH /profile/password API => forgot password
+- Make you validate all the data in every POST, PATCH APIs
+
+- Read about enum [https://mongoosejs.com/docs/search.html?q=enum], [https://mongoosejs.com/docs/validation.html]
+
+- Create connectionRequestShema
+- Create connectionRequestModel
+- create POST /request/send/:status/:userId - interested,ignored
+- Add exact validation - status,Only one time we need to send the request for the same connection request.
+ status - validation completed
+
+[vice versa - fromUser to toUser & toUser to fromUser]
+
+- create connectionRequest schema
+- send connection request API
+- Proper validation of Data
+- $or and $and query in mongoose - 
+- ### always think about all the corner cases
+- schema.pre("save") function
+- read more about indexes in MongoDB
+- why do we need index in DB?
+- what is the advantages and disadvantages of creating?
+- Read this article about compound indexes - [ https://www.mongodb.com/docs/manual/core/indexes/index-types/index-compound/#std-label-index-type-compound ]
+
+- pre [https://mongoosejs.com/docs/middleware.html#pre]
+- interested one more profile with dynamic message,ignored,pre
+- unique (automatically will create index),index create,compound index create
+- why we nned to create index, why we do not do index for all the fields [advantages & disadvantages]
+- [https://www.mongodb.com/docs/manual/indexes/ , https://mongoosejs.com/docs/schematypes.html#indexes ]
+- read more about logical queries [ $or] - [ https://www.mongodb.com/docs/manual/reference/operator/query-logical/?msockid=389ea702490d61e72faab21d486c6018 ]

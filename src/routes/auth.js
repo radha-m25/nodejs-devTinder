@@ -2,10 +2,11 @@ const express = require('express');
 const authRouter = express.Router();
 const bcrypt = require("bcrypt");
 const User = require("../models/user");
+const { validateSignupData } = require('../utils/validation');
 
 authRouter.post("/signup", async (req, res) => {
   // validate data
-  const { firstName, lastName, email, password } = req.body;
+  const { firstName, lastName, email, address, password , photoUrl,skills } = req.body;
 
   // encrypt password
   const passwordHash = await bcrypt.hash(password, 10);
@@ -16,9 +17,15 @@ authRouter.post("/signup", async (req, res) => {
     lastName,
     email,
     password: passwordHash,
+    address,
+    photoUrl,
+    skills
   };
 
   try {
+    if(validateSignupData(req)) {
+      res.send("Data is valid");
+    }
     if (userDetails?.skills?.length > 10) {
       return res.status(400).send("max legnth exceed");
     }
@@ -58,5 +65,10 @@ authRouter.post("/login", async (req, res) => {
       return res.send("ERROR: " + " " + e.message);
     }
   });
+
+authRouter.post("/logout", async (req,res) => {
+  res.cookie("AuthToken", null , {expires: new Date(Date.now())});
+  res.send("logged out ssuccessfully!!!");
+})
 
 module.exports = authRouter;
