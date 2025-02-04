@@ -6,6 +6,7 @@ const bcrypt = require("bcrypt");
 const userSchema = new mongoose.Schema({
     firstName: {
         type: String,
+        index: true,  // to create index
     },
     lastName: {
         type: String,
@@ -17,7 +18,7 @@ const userSchema = new mongoose.Schema({
     email: {
         type: String,
         required: true,
-        unique: true,
+        unique: true,   // It will create index also
         lowercase: true,
         validate(value) {
             if(!validator.isEmail(value)) {
@@ -61,6 +62,9 @@ const userSchema = new mongoose.Schema({
         type: [String],
     }
 }, {timestamps: true});
+
+
+userSchema.index({ firstName: 1, lastName: 1 });
 
 
 // Always try to create reusable methods

@@ -10,15 +10,14 @@ RequestRouter.post(
   async (req, res) => {
     try {
       const { status, toUserId } = req.params;
-      const user = req.user;
-      const fromUserId = user._id;
+      const fromUserId = req.user._id;
 
       const allowedStatus = ["interested","ignored"];
       if(!allowedStatus.includes(status)) {
         throw new Error("Invalid status");
       }
 
-      const toUser = await User.findOne({toUserId});
+      const toUser = await User.findOne({ _id: toUserId});
 
       if(!toUser) {
         return res.status(404).json({ message: "User not found, Invalid user" });
@@ -26,7 +25,7 @@ RequestRouter.post(
 
       const isExistConnection = await ConnectionRequest.findOne({
         $or: [
-          {fromUserId: fromUserId, toUserId: toUserId},
+          {fromUserId, toUserId},
           {fromUserId: toUserId, toUserId: fromUserId}
         ]
       });
@@ -42,7 +41,7 @@ RequestRouter.post(
       });
       const data = await userRequest.save();
       res.json({
-        message: "Connection Request Sent Successfully",
+        message: req.user.firstName + " " + "send " + status + " " + "request to " + " " + toUser.firstName ,
         data,
       });
     } catch (err) {
@@ -52,5 +51,39 @@ RequestRouter.post(
     }
   }
 );
+
+RequestRouter.post("/request/review/:status/:requestId", userAuth, async (req,res) => {
+  try {
+    const loggedInUser = req.user;
+    const { status, requestId } = req.params;
+    
+    const allowedStatus = ["accepted","rejected"];
+
+    if(!allowedStatus.includes(status)) {
+      throw new Error("Invalid status");
+    }
+
+    const connectionRequest = await ConnectionRequest.findOne({
+      _id: requestId,
+      toUserId: loggedInUser._id,
+      status: "interested"
+    }).populate("fromUserId", "firstName lastName");
+  // }).populate("fromUserId", [firstName,lastName]);
+
+    console.log("connection request: " + connectionRequest);
+
+    connectionRequest.status = status;
+
+    // const data = await connectionRequest.save();
+
+    res.json({
+      message: "Request reviewed",
+      // data
+    });
+
+  } catch(err) {
+    res.status(500).json({message: err.message});
+  }
+})
 
 module.exports = RequestRouter;

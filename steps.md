@@ -138,3 +138,10 @@ EPI-11
 - why we nned to create index, why we do not do index for all the fields [advantages & disadvantages]
 - [https://www.mongodb.com/docs/manual/indexes/ , https://mongoosejs.com/docs/schematypes.html#indexes ]
 - read more about logical queries [ $or] - [ https://www.mongodb.com/docs/manual/reference/operator/query-logical/?msockid=389ea702490d61e72faab21d486c6018 ]
+
+EPI-13
+- Write code with proper validations for POST /request/review/:status/:requestId
+- Thought process - POST vs GET
+- Read abt ref and populate [https://mongoosejs.com/docs/populate.html]
+- Create GET call -  user/requests/received with all the checks
+- Create GET /user/connections
